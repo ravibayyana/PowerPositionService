@@ -39,7 +39,10 @@ Which Generates Power CSV's at scheduled interval.
  
  # Improvements or suggestions
  - Due to time constraints no unit tests are written
- - When service is stopped the generating of csv files need to stopped gracefully. Now its stopped abruptly 
+ - When service is stopped the generating of csv files need to be stopped gracefully. Its stopped abruptly 
 
+# DEMO
+- ![](PowerService.gif)
+-
 # Improvements or suggestions
 - Ravi Bayyana
