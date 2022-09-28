@@ -9,7 +9,7 @@ Which Generates Power CSV's at scheduled interval.
 - CSV file will be generated in format PowerPosition_YYYYMMDD_HHMM.csv
 - CSV file location, interval(set to 1 min in appsettings, Default is set to 5 min) are read from Appsettings
 - None of the schedules will be missed
-- Logging for prod support
+- Logging for prod support. Serilog is used for logging.
 - Log file and CSV's will be created in the current Directory. 
 
 # How to run the project
