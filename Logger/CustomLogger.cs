@@ -15,6 +15,8 @@ internal class CustomLogger : ICustomLogger
             .WriteTo.Console(outputTemplate: outputTemplate)
             .WriteTo.File(fullLogFilePath, outputTemplate: outputTemplate)
             .CreateLogger();
+
+        LogInformation($"Log file at: {Path.Combine(Directory.GetCurrentDirectory(), fullLogFilePath)}");
     }
 
     public void LogInformation(string message)

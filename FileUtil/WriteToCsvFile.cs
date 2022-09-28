@@ -40,7 +40,7 @@ public class WriteToCsvFile : IWriteToCsvFile
 
             var fullFilePath = GetPath(date);
             File.WriteAllText(fullFilePath, data.ToString());
-            _logger.LogInformation($"SUCCESSFULLY created PowerPosition: {fullFilePath}");
+            _logger.LogInformation($"SUCCESSFULLY created PowerPosition: {Path.Combine(Directory.GetCurrentDirectory(),fullFilePath)}");
         });
     }
 
