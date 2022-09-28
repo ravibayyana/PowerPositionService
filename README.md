@@ -44,5 +44,5 @@ Which Generates Power CSV's at scheduled interval.
 # DEMO
 - ![](PowerService.gif)
 -
-# Improvements or suggestions
+# Author
 - Ravi Bayyana
