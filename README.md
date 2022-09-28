@@ -14,7 +14,7 @@ Which Generates Power CSV's at scheduled interval.
 
 # How to run the project
 
-- Either user can Debug or run it as a service
+- User can Either Debug or Run it as a service
  >   Debug 
  - Build the project in visual studio
  - Run (Ctrl+F5) or Debug(F5)
@@ -38,7 +38,7 @@ Which Generates Power CSV's at scheduled interval.
  - sc.exe delete "PowerPositionService"
  
  # Improvements or suggestions
- - Due to time constraints no unit tests are written
+ - No unit tests are written. Probably will take more time to submit the solution
  - When service is stopped the generating of csv files need to be stopped gracefully. Its stopped abruptly 
 
 # DEMO
