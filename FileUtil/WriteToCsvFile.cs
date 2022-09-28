@@ -9,12 +9,15 @@ public class WriteToCsvFile : IWriteToCsvFile
 {
     private readonly IAppConfigSettings _appConfigSettings;
     private readonly ICustomLogger _logger;
+    private readonly IUtility _utility;
     private readonly Dictionary<int, string> _periodMap;
 
     public WriteToCsvFile(ICustomLogger logger,
+        IUtility utility,
         IAppConfigSettings appConfigSettings)
     {
         _logger = logger;
+        _utility = utility;
         _appConfigSettings = appConfigSettings;
         _periodMap = SetupPeriodMap();
     }
@@ -37,7 +40,7 @@ public class WriteToCsvFile : IWriteToCsvFile
         }
 
         var fullFilePath = GetPath(date);
-        File.WriteAllText(fullFilePath, data.ToString());
+        _utility.WriteToFile(fullFilePath, data.ToString());
         _logger.LogInformation(
             $"SUCCESSFULLY created PowerPosition: {Path.Combine(Directory.GetCurrentDirectory(), fullFilePath)}");
     }

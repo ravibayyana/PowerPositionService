@@ -3,6 +3,8 @@ using PowerPositionService.FileUtil;
 using PowerPositionService.Logger;
 using PowerPositionService.Service;
 using PowerPositionService.Setttings;
+using PowerPositionService.Utils;
+using Services;
 
 Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
@@ -11,9 +13,11 @@ var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddSingleton<ICustomLogger, CustomLogger>();
+        services.AddSingleton<IUtility, Utility>();
         services.AddSingleton<IWriteToCsvFile, WriteToCsvFile>();
         services.AddSingleton<IPositionService, PositionService>();
         services.AddSingleton<IAppConfigSettings, AppConfigSettings>();
+        services.AddSingleton<IPowerService, PowerService>();
 
         services.AddHostedService<PowerPositionBackgroundService>();
     })

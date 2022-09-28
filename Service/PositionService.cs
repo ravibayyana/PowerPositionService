@@ -1,6 +1,5 @@
 ﻿using PowerPositionService.FileUtil;
 using PowerPositionService.Logger;
-using PowerPositionService.Setttings;
 using PowerPositionService.Utils;
 using Services;
 
@@ -9,32 +8,32 @@ namespace PowerPositionService.Service;
 public class PositionService : IPositionService
 {
     private readonly ICustomLogger _logger;
-    private readonly IAppConfigSettings _appConfigSettings;
+    private readonly IUtility _utility;
     private readonly IWriteToCsvFile _writeToCsvFile;
-    private readonly PowerService _powerService;
-    private Timer _timer;
+    private readonly IPowerService _powerService;
     private bool _isStarted = false;
 
     public PositionService(
         ICustomLogger logger,
-        IAppConfigSettings appConfigSettings,
-        IWriteToCsvFile writeToCsvFile)
+        IUtility utility,
+        IWriteToCsvFile writeToCsvFile, 
+        IPowerService powerService)
     {
         _logger = logger;
+        _utility = utility;
         _logger = logger;
-        _appConfigSettings = appConfigSettings;
         _writeToCsvFile = writeToCsvFile;
-        _powerService = new PowerService();
+        _powerService = powerService;
     }
 
-    private void TimerCallBack(object? state)
+    public void TimerCallBack(object? state)
     {
         Start();
     }
 
     private async Task Start()
     {
-        var currentDateTime = DateTime.Now;
+        var currentDateTime = _utility.CurrentDateTime;
         _logger.LogInformation($"================ START PositionService [{currentDateTime}] ======================");
 
         try
@@ -57,7 +56,7 @@ public class PositionService : IPositionService
             return;
 
         _isStarted = true;
-        _timer = new Timer(TimerCallBack, this, TimeSpan.Zero, TimeSpan.FromMinutes(_appConfigSettings.ScheduleIntervalInMinutes));
+        _utility.StartTimer(TimerCallBack);
     }
 
     private PositionVolumes GetPositionVolumes(IEnumerable<PowerTrade> powerTrades, DateTime forDate)
