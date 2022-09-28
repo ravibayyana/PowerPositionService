@@ -4,5 +4,5 @@ namespace PowerPositionService.FileUtil;
 
 public interface IWriteToCsvFile
 {
-    Task Write(PositionVolumes positionVolumes);
+    void Write(PositionVolumes positionVolumes);
 }

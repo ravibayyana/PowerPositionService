@@ -19,29 +19,27 @@ public class WriteToCsvFile : IWriteToCsvFile
         _periodMap = SetupPeriodMap();
     }
 
-    public async Task Write(PositionVolumes positionVolumes)
+    public void Write(PositionVolumes positionVolumes)
     {
-        await Task.Run(() =>
+        var positions = positionVolumes.PowerPositions.ToDictionary(x => x.Key, x => x.Value.Sum());
+        var date = positionVolumes.ForDate;
+        var data = new StringBuilder();
+
+        for (var i = 0; i < positionVolumes.PowerPositions.Count; i++)
         {
-            var positions = positionVolumes.PowerPositions.ToDictionary(x => x.Key, x => x.Value.Sum());
-            var date = positionVolumes.ForDate;
-            var data = new StringBuilder();
-
-            for (var i = 0; i < positionVolumes.PowerPositions.Count; i++)
+            data.Append($"Local Time, Volume{Environment.NewLine}");
+            foreach (var position in positions)
             {
-                data.Append($"Local Time, Volume{Environment.NewLine}");
-                foreach (var position in positions)
-                {
-                    data.Append($"{_periodMap[position.Key]}, {position.Value}{Environment.NewLine}");
-                }
-                data.Append($",{Environment.NewLine}");
-                data.Append($",{Environment.NewLine}");
+                data.Append($"{_periodMap[position.Key]}, {position.Value}{Environment.NewLine}");
             }
+            data.Append($",{Environment.NewLine}");
+            data.Append($",{Environment.NewLine}");
+        }
 
-            var fullFilePath = GetPath(date);
-            File.WriteAllText(fullFilePath, data.ToString());
-            _logger.LogInformation($"SUCCESSFULLY created PowerPosition: {Path.Combine(Directory.GetCurrentDirectory(),fullFilePath)}");
-        });
+        var fullFilePath = GetPath(date);
+        File.WriteAllText(fullFilePath, data.ToString());
+        _logger.LogInformation(
+            $"SUCCESSFULLY created PowerPosition: {Path.Combine(Directory.GetCurrentDirectory(), fullFilePath)}");
     }
 
     private Dictionary<int, string> SetupPeriodMap()

@@ -32,7 +32,7 @@ public class PositionService : IPositionService
         Start();
     }
 
-    public async Task Start()
+    private async Task Start()
     {
         var currentDateTime = DateTime.Now;
         _logger.LogInformation($"================ START PositionService [{currentDateTime}] ======================");
@@ -41,7 +41,7 @@ public class PositionService : IPositionService
         {
             var trades = await _powerService.GetTradesAsync(currentDateTime);
             var powerTrades = GetPositionVolumes(trades, currentDateTime);
-            await _writeToCsvFile.Write(powerTrades);
+            _writeToCsvFile.Write(powerTrades);
         }
         catch (Exception e)
         {
@@ -49,7 +49,6 @@ public class PositionService : IPositionService
         }
 
         _logger.LogInformation($"================ END PositionService [{currentDateTime}] ======================");
-
     }
 
     public void StartCalculatingPowerPositions()
