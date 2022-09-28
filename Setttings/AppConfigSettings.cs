@@ -51,7 +51,8 @@ internal class AppConfigSettings : IAppConfigSettings
         var settingValue = _appSettings.ScheduleIntervalInMinutes;
         if (int.TryParse(settingValue, out var value)) return value;
 
-        return int.Parse(_defaultSettingValues[AppConstants.ScheduleIntervalInMinutes]);
+        var result = int.Parse(_defaultSettingValues[AppConstants.ScheduleIntervalInMinutes]);
+        return result > 0 ? result : 5;
     }
 
     private string GetPowerPositionCSVLocation()
