@@ -7,7 +7,7 @@ Which Generates Power CSV's at scheduled interval.
 - All trade positions are aggregated per hour
 - CSV output in two columns (Local Time, Volume)
 - CSV file will be generated in format PowerPosition_YYYYMMDD_HHMM.csv
-- CSV file location, interval are read from Appsettings
+- CSV file location, interval(set to 1 min in appsettings, Default is set to 5 min) are read from Appsettings
 - None of the schedules will be missed
 - Logging for prod support
 - Log file and CSV's will be created in the current Directory. 
@@ -36,3 +36,8 @@ Which Generates Power CSV's at scheduled interval.
  - Log files and CSV's will be generated in "XXXX\Release\net6.0\publish\win-x64\Petroineos" 
  - Delete the service run the following command 
  - sc.exe delete "PowerPositionService"
+ 
+ # Improvements or suggestions
+ - Due to time constraints no unit tests are written
+ - When service is stopped the generating of csv files need to stopped gracefully. Now its stopped abruptly
+ - When the 
