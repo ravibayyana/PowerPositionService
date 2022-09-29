@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PowerPositionService.Utils
+﻿namespace PowerPositionService.Utils
 {
     internal class AppConstants
     {

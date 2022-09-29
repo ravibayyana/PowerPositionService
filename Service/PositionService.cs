@@ -5,13 +5,14 @@ using Services;
 
 namespace PowerPositionService.Service;
 
-public class PositionService : IPositionService
+public class PositionService : IPositionService, IDisposable
 {
     private readonly ICustomLogger _logger;
     private readonly IUtility _utility;
     private readonly IWriteToCsvFile _writeToCsvFile;
     private readonly IPowerService _powerService;
     private bool _isStarted = false;
+    private IDisposable _timerDisposable;
 
     public PositionService(
         ICustomLogger logger,
@@ -26,7 +27,7 @@ public class PositionService : IPositionService
         _powerService = powerService;
     }
 
-    public void TimerCallBack(object? state)
+    private void TimerCallBack()
     {
         Start();
     }
@@ -56,7 +57,7 @@ public class PositionService : IPositionService
             return;
 
         _isStarted = true;
-        _utility.StartTimer(TimerCallBack);
+        _timerDisposable =  _utility.StartTimer(TimerCallBack);
     }
 
     private PositionVolumes GetPositionVolumes(IEnumerable<PowerTrade> powerTrades, DateTime forDate)
@@ -76,5 +77,10 @@ public class PositionService : IPositionService
         }
 
         return new PositionVolumes { ForDate = forDate, PowerPositions = powerTradesDictionary };
+    }
+
+    public void Dispose()
+    {
+        _timerDisposable?.Dispose();
     }
 }

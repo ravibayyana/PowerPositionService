@@ -1,6 +1,5 @@
 using PowerPositionService.Logger;
 using PowerPositionService.Service;
-using PowerPositionService.Utils;
 
 namespace PowerPositionService;
 
@@ -43,6 +42,7 @@ public class PowerPositionBackgroundService : BackgroundService
         }
         finally
         {
+            (_positionService as IDisposable)?.Dispose();
             _hostApplicationLifetime.StopApplication();
         }
     }

@@ -18,6 +18,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddSingleton<IPositionService, PositionService>();
         services.AddSingleton<IAppConfigSettings, AppConfigSettings>();
         services.AddSingleton<IPowerService, PowerService>();
+        services.AddSingleton<ICustomSchedulerProvider, CustomScheduleProvider>();
 
         services.AddHostedService<PowerPositionBackgroundService>();
     })
